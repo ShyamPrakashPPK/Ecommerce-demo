@@ -28,13 +28,13 @@ const LOGOS: Logo[] = [
 
 function LogoCard({ logo }: { logo: Logo }) {
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white shadow-sm p-6 w-[220px] h-[180px] flex items-center justify-center">
+    <div className="rounded-2xl border border-gray-200 bg-white shadow-sm p-4 md:p-6 w-[160px] h-[120px] md:w-[220px] md:h-[180px] flex items-center justify-center shrink-0">
       <Image
         src={logo.src}
         alt={logo.name}
         width={160}
         height={80}
-        className="object-contain opacity-80"
+        className="object-contain opacity-80 w-full h-full"
       />
     </div>
   );
@@ -45,6 +45,7 @@ export default function TrustedClients() {
 
   const visible = useMemo(() => {
     const arr: Logo[] = [];
+    // Always return 5 logos, CSS will handle the responsive display
     for (let i = 0; i < 5; i++) {
       arr.push(LOGOS[(index + i) % LOGOS.length]);
     }
@@ -62,18 +63,18 @@ export default function TrustedClients() {
           Trusted by leading Clients
         </h2>
 
-        <div className="mt-8 flex items-center justify-center gap-4">
+        <div className="mt-8 flex items-center justify-center gap-2 md:gap-4">
           {/* Left arrow */}
           <button
             aria-label="Previous"
             onClick={prev}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 text-gray-700 hover:bg-gray-50"
+            className="inline-flex h-8 w-8 md:h-10 md:w-10 items-center justify-center rounded-full border border-gray-300 text-gray-700 hover:bg-gray-50 shrink-0"
           >
-            <ChevronLeft size={22} strokeWidth={2} />
+            <ChevronLeft size={18} strokeWidth={2} className="md:w-[22px] md:h-[22px]" />
           </button>
 
           {/* Logo cards */}
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-3 md:gap-6 overflow-hidden">
             {visible.map((logo) => (
               <LogoCard key={logo.id} logo={logo} />
             ))}
@@ -83,9 +84,9 @@ export default function TrustedClients() {
           <button
             aria-label="Next"
             onClick={next}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 text-gray-700 hover:bg-gray-50"
+            className="inline-flex h-8 w-8 md:h-10 md:w-10 items-center justify-center rounded-full border border-gray-300 text-gray-700 hover:bg-gray-50 shrink-0"
           >
-            <ChevronRight size={22} strokeWidth={2} />
+            <ChevronRight size={18} strokeWidth={2} className="md:w-[22px] md:h-[22px]" />
           </button>
         </div>
       </div>
@@ -95,109 +96,112 @@ export default function TrustedClients() {
 
       {/* Footer */}
       <footer className="bg-[#2F3341] text-gray-200">
-        <div className="mx-auto max-w-7xl px-4 py-12 grid grid-cols-1 md:grid-cols-3 gap-10">
-          {/* Column 1 */}
-          <div className="space-y-6">
-            <h3 className="text-lg font-semibold text-white">Get to Know Us</h3>
-            <ul className="space-y-3 text-sm">
-              <li className="hover:text-white/90 cursor-pointer">About Us</li>
-              <li className="hover:text-white/90 cursor-pointer">Contact Us</li>
-              <li className="hover:text-white/90 cursor-pointer">Process</li>
-            </ul>
+        <div className="mx-auto max-w-7xl px-4 py-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+            {/* Column 1 */}
+            <div className="space-y-6 md:border-r md:border-white/10 md:pr-8">
+              <h3 className="text-lg font-semibold text-white">Get to Know Us</h3>
+              <ul className="space-y-3 text-sm">
+                <li className="hover:text-white/90 cursor-pointer">About Us</li>
+                <li className="hover:text-white/90 cursor-pointer">Contact Us</li>
+                <li className="hover:text-white/90 cursor-pointer">Process</li>
+              </ul>
 
-            <h3 className="text-lg font-semibold text-white">Useful links</h3>
-            <ul className="space-y-3 text-sm">
-              <li className="hover:text-white/90 cursor-pointer">FAQ</li>
-              <li className="hover:text-white/90 cursor-pointer">Terms &amp; Conditions</li>
-              <li className="hover:text-white/90 cursor-pointer">Privacy Policy</li>
-              <li className="hover:text-white/90 cursor-pointer">News &amp; Blogs</li>
-              <li className="hover:text-white/90 cursor-pointer">Help Center</li>
-            </ul>
-          </div>
-
-          {/* Column 2 */}
-          <div className="flex flex-col items-center text-center">
-            <div className="inline-flex items-center gap-2">
-            <Image
-                src="/logo.svg"
-                alt="Zedexel Store Logo"
-                width={28}
-                height={28}
-                className="text-cyan-400"
-              />
-              <span className="text-2xl font-semibold">Zedexel Store</span>
+              <h3 className="text-lg font-semibold text-white">Useful links</h3>
+              <ul className="space-y-3 text-sm">
+                <li className="hover:text-white/90 cursor-pointer">FAQ</li>
+                <li className="hover:text-white/90 cursor-pointer">Terms &amp; Conditions</li>
+                <li className="hover:text-white/90 cursor-pointer">Privacy Policy</li>
+                <li className="hover:text-white/90 cursor-pointer">News &amp; Blogs</li>
+                <li className="hover:text-white/90 cursor-pointer">Help Center</li>
+              </ul>
             </div>
 
-            <p className="mt-4 max-w-md text-sm text-gray-300">
-              An innovative tech platform by Zedexl Technology simplifying B2B
-              procurement in Qatar.
-            </p>
+            {/* Column 2 */}
+            <div className="flex flex-col items-center text-center md:border-r md:border-white/10 md:pr-8">
+              <div className="inline-flex items-center gap-2 mb-4">
+                <Image
+                  src="/logo.svg"
+                  alt="Zedexel Store Logo"
+                  width={28}
+                  height={28}
+                  className="text-cyan-400"
+                />
+                <span className="text-2xl font-semibold text-white">Zedexel Store</span>
+              </div>
 
-            <div className="mt-5 flex items-center gap-3">
-              <a
-                href="#"
-                className="h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center"
-                aria-label="LinkedIn"
-              >
-                <Linkedin size={18} />
-              </a>
-              <a
-                href="#"
-                className="h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center"
-                aria-label="Instagram"
-              >
-                <Instagram size={18} />
-              </a>
-              <a
-                href="#"
-                className="h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center"
-                aria-label="Twitter / X"
-              >
-                <Twitter size={18} />
-              </a>
-              <a
-                href="#"
-                className="h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center"
-                aria-label="YouTube"
-              >
-                <Youtube size={18} />
-              </a>
-              <a
-                href="#"
-                className="h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center"
-                aria-label="Facebook"
-              >
-                <Facebook size={18} />
-              </a>
+              <p className="max-w-md text-sm text-gray-300 mb-6">
+                An innovative tech platform by Zedexl Technology simplifying B2B
+                procurement in Qatar.
+              </p>
+
+              <div className="flex items-center gap-3">
+                <a
+                  href="#"
+                  className="h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
+                  aria-label="LinkedIn"
+                >
+                  <Linkedin size={18} />
+                </a>
+                <a
+                  href="#"
+                  className="h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
+                  aria-label="Instagram"
+                >
+                  <Instagram size={18} />
+                </a>
+                <a
+                  href="#"
+                  className="h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
+                  aria-label="Twitter / X"
+                >
+                  <Twitter size={18} />
+                </a>
+                <a
+                  href="#"
+                  className="h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
+                  aria-label="YouTube"
+                >
+                  <Youtube size={18} />
+                </a>
+                <a
+                  href="#"
+                  className="h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
+                  aria-label="Facebook"
+                >
+                  <Facebook size={18} />
+                </a>
+              </div>
             </div>
-          </div>
 
-          {/* Column 3 */}
-          <div className="space-y-6">
-            <h3 className="text-lg font-semibold text-white">Contact Informations</h3>
-            <div className="space-y-4 text-sm">
-              <div>
-                <div className="text-white/90 font-medium">Get in Touch With Us</div>
-                <div className="text-gray-300">iProcure.ai, Doha, Qatar</div>
-              </div>
-              <div>
-                <div className="text-white/90 font-medium">Email Address</div>
-                <div className="text-gray-300">info@iprocure.ai</div>
-              </div>
-              <div>
-                <div className="text-white/90 font-medium">Phone Number</div>
-                <div className="text-gray-300">+974 7799 9600</div>
+            {/* Column 3 */}
+            <div className="space-y-6">
+              <h3 className="text-lg font-semibold text-white">Contact Informations</h3>
+              <div className="space-y-4 text-sm">
+                <div>
+                  <div className="text-white/90 font-medium">Get in Touch With Us</div>
+                  <div className="text-gray-300">iProcure.ai, Doha, Qatar</div>
+                </div>
+                <div>
+                  <div className="text-white/90 font-medium">Email Address</div>
+                  <div className="text-gray-300">info@iprocure.ai</div>
+                </div>
+                <div>
+                  <div className="text-white/90 font-medium">Phone Number</div>
+                  <div className="text-gray-300">+974 7799 9600</div>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="border-t border-white/10">
-          <div className="mx-auto max-w-7xl px-4 py-4 text-xs text-gray-400 flex items-center justify-between">
-            <span>© {new Date().getFullYear()} IPROCURE. All rights reserved.</span>
-            <div className="flex gap-4">
-              <a href="#" className="hover:text-gray-300">Terms</a>
-              <a href="#" className="hover:text-gray-300">Privacy</a>
+        <div className="border-t border-white/10 mt-8">
+          <div className="mx-auto max-w-7xl px-4 py-6 text-xs text-gray-400 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <span>© {new Date().getFullYear()} ZedExel. All rights reserved.</span>
+            <div className="flex gap-6">
+              <a href="#" className="hover:text-gray-300 transition-colors">Terms</a>
+              <a href="#" className="hover:text-gray-300 transition-colors">Privacy</a>
+              <a href="#" className="hover:text-gray-300 transition-colors">Cookies</a>
             </div>
           </div>
         </div>
