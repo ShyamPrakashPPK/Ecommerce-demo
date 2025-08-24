@@ -1,19 +1,21 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
+import Image from "next/image";
 const links = [
   { href: "/admin", label: "Dashboard" },
   { href: "/admin/products", label: "Products" },
-  { href: "/admin/products/new", label: "Add Product" },
 ];
+
 
 export default function AdminSidebar() {
   const pathname = usePathname();
 
   return (
     <aside className="w-64 bg-white shadow-md h-full">
-      <div className="p-4 text-2xl font-bold border-b">Admin Panel</div>
+      <div className="flex items-center justify-center gap-4 p-4 text-2xl font-bold">
+        <Image src="/logo.svg" alt="ZedExel" width={32} height={32} />Admin
+      </div>
       <nav className="flex flex-col gap-2 p-4">
         {links.map((link) => (
           <Link

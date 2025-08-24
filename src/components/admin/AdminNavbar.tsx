@@ -2,7 +2,7 @@
 export default function AdminNavbar() {
   return (
     <header className="bg-white shadow-md p-4 flex justify-between items-center">
-      <h1 className="text-xl font-semibold">Admin Dashboard</h1>
+      <div className="flex items-center gap-4"></div>
       <button
       onClick={async () => {
         await fetch("/api/admin/logout", { method: "POST" });

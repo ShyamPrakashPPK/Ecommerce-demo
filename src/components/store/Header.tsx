@@ -39,10 +39,10 @@ export default function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-40 bg-white/90 backdrop-blur">
+    <header className="sticky top-0 z-40 bg-white/90 backdrop-blur ">
       {/* ---- Top Row: Logo + Search + Actions ---- */}
-      <div className="max-w-7xl mx-auto px-3 md:px-6">
-        <div className="flex items-center justify-between py-3 gap-4">
+      <div className=" mx-auto px-3 md:px-6 py-3">
+        <div className="flex items-center justify-between px-[10%] gap-4">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 shrink-0">
             <Image src="/logo.svg" alt="Zedexel Store" width={36} height={36} />
@@ -93,11 +93,11 @@ export default function Header() {
       </div>
 
       {/* ---- Second Row: Navigation Menu (Full Width Border) ---- */}
-      <div className="w-full border-y border-gray-200 bg-white">
-        <div className="max-w-7xl mx-auto px-3 md:px-6 py-2">
-          <NavigationMenu>
+      <div className="w-full border-y  border-gray-200 bg-cyan-700">
+        <div className=" mx-auto  md:px-6 py-2">
+          <NavigationMenu className="px-[9%]">
             <NavigationMenuList className="flex gap-2">
-              <NavigationMenuItem>
+              <NavigationMenuItem >
                 <NavigationMenuTrigger>Categories</NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="grid w-[500px] gap-3 p-4 md:grid-cols-2 lg:w-[600px]">

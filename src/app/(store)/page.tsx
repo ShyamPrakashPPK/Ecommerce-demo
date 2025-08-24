@@ -2,60 +2,61 @@
 
 import { useState, useEffect } from "react";
 import ProductsGrid from "@/components/store/ProductGrid";
-
-const dummyProducts = [
-  {
-    id: "1",
-    name: "3M Speedglas Welding Helmet",
-    price: 120,
-    oldPrice: 150,
-    stock: 5,
-    category: "Safety Equipment",
-    vendor: "3M",
-    imageUrl: "https://via.placeholder.com/150",
-  },
-  {
-    id: "2",
-    name: "MSA V-Gard Hard Hat",
-    price: 45,
-    stock: 0,
-    category: "Safety Helmet",
-    vendor: "MSA",
-    imageUrl: "https://via.placeholder.com/150",
-  },
-  // ...add more dummy products
-];
-
-const banners = [
-  "https://via.placeholder.com/1200x400?text=Banner+1",
-  "https://via.placeholder.com/1200x400?text=Banner+2",
-  "https://via.placeholder.com/1200x400?text=Banner+3",
-];
+import FullBanner from "@/components/store/FullBanner";
+import CategoriumMosaic from "@/components/store/CategoriumMosaic";
+import FeaturedProducts from "@/components/store/FeaturedProducts";
 
 export default function HomePage() {
-  const [currentBanner, setCurrentBanner] = useState(0);
+  const widgetDetails = {
+    view: {
+      viewCount: { mobile: 2, tablet: 3, desktop: 5 },
+    },
+  };
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentBanner((prev) => (prev + 1) % banners.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
+  const categories = [
+    {
+      id: 1,
+      name: "Safety Helmets",
+      image:
+        "https://d3rbxgeqn1ye9j.cloudfront.net/media/image/88/f6/4b/9897479sKTmnmgdchk2H_540x540.jpg",
+      href: "/products?category=Safety&sort=latestUpdated&page=1&limit=8",
+    },
+    {
+      id: 2,
+      name: "Respirators",
+      image:
+        "https://image.made-in-china.com/2f0j00QjEhSwfggHpK/Safety-Harmful-Chemical-Industry-Worker-Safety-Half-Face-Respirator-Half-Face-Gas-Mask.webp",
+      href: "/products?category=Safety&sort=latestUpdated&page=1&limit=8",
+    },
+    {
+      id: 3,
+      name: "Gloves",
+      image: "/banners/3.png", // local example
+      href: "/products?category=Safety&sort=latestUpdated&page=1&limit=8",
+    },
+    {
+      id: 4,
+      name: "Robotics",
+      image: "/banners/4.png",
+      href: "/products?category=Safety&sort=latestUpdated&page=1&limit=8",
+    },
+  ];
 
   return (
-    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <main className="">
       {/* Banner Slider */}
-      <div className="w-full h-64 sm:h-96 overflow-hidden rounded-xl shadow-md mb-8">
-        <img
-          src={banners[currentBanner]}
-          alt="Banner"
-          className="w-full h-full object-cover transition-all"
-        />
+<FullBanner/>
+
+<div className="px-4">
+        <h2 className="text-2xl font-bold mb-6 mt-10">Shop by Category</h2>
+        <CategoriumMosaic categories={categories} view={widgetDetails.view} />
       </div>
 
-      {/* Products Section */}
-      <h2 className="text-2xl font-bold">Featured Products</h2>
-      {/* <ProductsGrid products={dummyProducts} /> */}
+      
+        {/* Featured Products Carousel */}
+        <div className="px-4">
+        <FeaturedProducts />
+        </div>
     </main>
   );
 }

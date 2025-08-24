@@ -6,6 +6,14 @@ import { useRouter } from "next/navigation";
 export default function AddProductPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+
+  // ✅ Hardcoded image links from your MongoDB (replace with actual ones you added)
+  const imageOptions = [
+    "https://d3rbxgeqn1ye9j.cloudfront.net/media/image/88/f6/4b/9897479sKTmnmgdchk2H_540x540.jpg",
+    "https://image.made-in-china.com/2f0j00QjEhSwfggHpK/Safety-Harmful-Chemical-Industry-Worker-Safety-Half-Face-Respirator-Half-Face-Gas-Mask.webp",
+    "https://d3rbxgeqn1ye9j.cloudfront.net/media/image/88/f6/4b/9897479sKTmnmgdchk2H_540x540.jpg",
+  ];
+
   const [form, setForm] = useState({
     name: "",
     price: "",
@@ -14,12 +22,19 @@ export default function AddProductPage() {
     vendor: "",
     status: "active",
     description: "",
+    images: [] as string[], // ✅ now an array
   });
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  // ✅ Special handler for multi-select images
+  const handleImageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selected = Array.from(e.target.selectedOptions, (opt) => opt.value);
+    setForm({ ...form, images: selected });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -108,6 +123,38 @@ export default function AddProductPage() {
               className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
             />
           </div>
+        </div>
+
+        {/* ✅ Multi Image dropdown */}
+        <div>
+          <label className="block text-sm font-medium mb-1">Product Images</label>
+          <select
+            multiple
+            name="images"
+            value={form.images}
+            onChange={handleImageChange}
+            className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none h-32"
+          >
+            {imageOptions.map((img, idx) => (
+              <option key={idx} value={img}>
+                {img}
+              </option>
+            ))}
+          </select>
+
+          {/* Preview selected images */}
+          {form.images.length > 0 && (
+            <div className="mt-3 grid grid-cols-3 gap-2">
+              {form.images.map((img, idx) => (
+                <img
+                  key={idx}
+                  src={img}
+                  alt={`Selected ${idx}`}
+                  className="h-24 rounded-md border shadow"
+                />
+              ))}
+            </div>
+          )}
         </div>
 
         <div>

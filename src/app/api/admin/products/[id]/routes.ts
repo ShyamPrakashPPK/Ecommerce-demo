@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
 
-const DB_NAME = "zedexel";
+const DB_NAME = "test";
 const COLLECTION = "products";
 
 export async function GET(

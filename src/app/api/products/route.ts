@@ -58,15 +58,12 @@ export async function GET(req: NextRequest) {
     const sort = ((params.sort as SortKey) || "latestUpdated") as SortKey;
 
     const pageNum = Math.max(1, parseInt((params.page as string) || "1", 10) || 1);
-    const limitNum = Math.min(
-      60,
-      Math.max(1, parseInt((params.limit as string) || "12", 10) || 12),
-    );
+    const limitNum = Math.max(1, parseInt((params.limit as string) || "8", 10) || 8);
 
     const includeArchived = (params.includeArchived as string) === "true";
 
     const client = await clientPromise;
-    const db = client.db("zedexel");
+    const db = client.db("test");
     const collection = db.collection("products");
 
     // Base listing query with current selections
@@ -85,6 +82,8 @@ export async function GET(req: NextRequest) {
       collection.find(baseQuery).sort(sortOptions).skip(skip).limit(limitNum).toArray(),
       collection.countDocuments(baseQuery),
     ]);
+
+    
 
     const totalPages = Math.max(1, Math.ceil(total / limitNum));
 
@@ -223,7 +222,7 @@ export async function POST(req: NextRequest) {
     }
 
     const client = await clientPromise;
-    const db = client.db("zedexel");
+    const db = client.db("test");
     const collection = db.collection("products");
 
     const newProduct = {

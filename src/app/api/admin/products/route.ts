@@ -8,7 +8,7 @@ export async function GET(req: NextRequest) {
         Object.fromEntries(req.nextUrl.searchParams);
   
       const client = await clientPromise;
-      const db = client.db("zedexel");
+      const db = client.db("test");
       const collection = db.collection("products");
   
       const query: any = {};
@@ -88,7 +88,7 @@ export async function POST(req: NextRequest) {
     }
 
     const client = await clientPromise;
-    const db = client.db("zedexel");
+    const db = client.db("test");
     const collection = db.collection("products");
 
     const newProduct = {

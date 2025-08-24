@@ -9,7 +9,7 @@ export async function GET(
   try {
     const { id } = await params;
     const client = await clientPromise;
-    const db = client.db("zedexel");
+    const db = client.db("test");
     const collection = db.collection("products");
 
     // Validate ObjectId format
