@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
+import Breadcrumb from "@/components/store/BreadCrums";
 
 interface Product {
   _id: string;
@@ -91,23 +92,16 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
 
   return (
     <div className="min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 py-8">
+      <div className="pb-10">
+        <Breadcrumb
+          items={[
+            { name: "Products", link: "/products" },
+            { name: product.name },
+          ]} />
+      </div>
+      <div className="container mx-auto px-4 py-8">
         {/* Breadcrumbs */}
-        <nav className="text-sm text-gray-500 mb-4">
-          <ol className="flex items-center gap-2">
-            <li className="hover:text-gray-700 cursor-pointer">Home</li>
-            <li>/</li>
-            <li className="hover:text-gray-700 cursor-pointer">Products</li>
-            {product.category ? (
-              <>
-                <li>/</li>
-                <li className="hover:text-gray-700 cursor-pointer">{product.category}</li>
-              </>
-            ) : null}
-            <li>/</li>
-            <li className="text-gray-800">{product.name}</li>
-          </ol>
-        </nav>
+        
 
         {/* Header Card */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

@@ -1,6 +1,6 @@
 "use client";
 
-import { JSX, useEffect, useMemo, useState } from "react";
+import { JSX, useEffect, useMemo, useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import ProductCard from "@/components/store/ProductCard";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -15,8 +15,8 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import ProductBanner from "@/components/store/ProductBanner";
 import Image from "next/image";
+import Breadcrumb from "@/components/store/BreadCrums";
 
 type StockFilter = "" | "in" | "out";
 
@@ -46,7 +46,7 @@ function toggleInArray(arr: string[], value: string) {
 
 type FacetItem = { label: string; count: number; key: string };
 
-export default function ProductsPage() {
+function ProductsPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [initialSearch, setInitialSearch] = useState<string>("");
@@ -62,9 +62,12 @@ export default function ProductsPage() {
   const [searchDraft, setSearchDraft] = useState<string>("");
   const [showMoreCats, setShowMoreCats] = useState<boolean>(false);
   const [showMoreVendors, setShowMoreVendors] = useState<boolean>(false);
+  const [isInitialized, setIsInitialized] = useState<boolean>(false);
 
-  // Initialize filters from URL
+  // Initialize filters from URL (only once)
   useEffect(() => {
+    if (isInitialized) return;
+
     const urlFilters: Filters = {
       search: searchParams.get("search") || "",
       categories: searchParams.get("category")?.split(",") || [],
@@ -77,15 +80,14 @@ export default function ProductsPage() {
 
     setFilters(urlFilters);
     setSearchDraft(urlFilters.search);
-
-    // NEW: capture the very first URL search as baseline (only once)
     setInitialSearch((prev) => (prev === "" ? urlFilters.search : prev));
-  }, [searchParams]);
+    setIsInitialized(true);
+  }, [searchParams, isInitialized]);
 
-
-
-  // Update URL when filters change
+  // Update URL when filters change (only after initialization)
   useEffect(() => {
+    if (!isInitialized) return;
+
     const params = new URLSearchParams();
     if (filters.search) params.set("search", filters.search);
     if (filters.categories.length) params.set("category", filters.categories.join(","));
@@ -96,7 +98,7 @@ export default function ProductsPage() {
     params.set("limit", String(filters.limit));
 
     router.replace(`?${params.toString()}`);
-  }, [filters, router]);
+  }, [filters, router, isInitialized]);
 
   // Build query string for API
   const queryString = useMemo(() => {
@@ -176,7 +178,14 @@ export default function ProductsPage() {
   const vendorsAllCount = vendorsFacet.find((x) => x.label === "All")?.count ?? total;
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen ">
+      <div className="pb-10">
+        <Breadcrumb
+          items={[
+            { name: "Products", link: "/products" },
+          ]} />
+      </div>
+      <div className="pb-10 container mx-auto">
       <Image src="/banners/full.png" alt="Banner" width={1600} height={323} />
       <div className="mx-auto   py-6 mt-5 flex gap-6">
         {/* Sidebar */}
@@ -310,10 +319,10 @@ export default function ProductsPage() {
           <Tabs defaultValue="products" className="w-full">
             <div className="border-b border-gray-200 pb-2">
 
-            <TabsList>
-              <TabsTrigger value="products">Products</TabsTrigger>
-              <TabsTrigger value="suppliers">Suppliers</TabsTrigger>
-            </TabsList>
+              <TabsList>
+                <TabsTrigger value="products">Products</TabsTrigger>
+                <TabsTrigger value="suppliers">Suppliers</TabsTrigger>
+              </TabsList>
 
             </div>
             {/* Products Tab */}
@@ -486,7 +495,7 @@ export default function ProductsPage() {
                 </PaginationContent>
                 </Pagination>
 
-         
+
                 </div>)}
             </TabsContent>
 
@@ -515,6 +524,52 @@ export default function ProductsPage() {
           </Tabs>
         </main>
       </div>
+      </div>
+      </div>
+    );
+}
+
+function LoadingFallback() {
+  return (
+    <div className="min-h-screen">
+      <div className="mx-auto py-6 mt-5 flex gap-6">
+        <aside className="hidden md:block w-80 shrink-0">
+          <div className="flex items-center justify-between my-[10%]">
+            <Skeleton className="h-8 w-20" />
+            <Skeleton className="h-8 w-20" />
+          </div>
+          <div className="w-full px-4 py-4 bg-white rounded-lg border border-gray-200">
+            <Skeleton className="h-12 w-full mb-4" />
+            <Skeleton className="h-12 w-full mb-4" />
+            <Skeleton className="h-12 w-full" />
+          </div>
+        </aside>
+        <main className="flex-1">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <div key={i} className="border rounded-lg shadow-sm p-3 flex flex-col gap-3 bg-white">
+                <Skeleton className="h-40 w-full rounded-md" />
+                <div className="space-y-2">
+                  <Skeleton className="h-4 w-3/4" />
+                  <Skeleton className="h-4 w-1/2" />
+                </div>
+                <div className="mt-auto flex justify-between items-center">
+                  <Skeleton className="h-6 w-12" />
+                  <Skeleton className="h-8 w-20 rounded-md" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </main>
+      </div>
     </div>
+  );
+}
+
+export default function ProductsPage() {
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <ProductsPageContent />
+    </Suspense>
   );
 }

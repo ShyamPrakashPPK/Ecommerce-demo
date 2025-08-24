@@ -7,19 +7,20 @@ const COLLECTION = "products";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params; // ✅ must await params
     const client = await clientPromise;
-    const db = client.db(DB_NAME);
+    const db = client.db("test");
 
-    if (!ObjectId.isValid(params.id)) {
+    if (!ObjectId.isValid(id)) {
       return NextResponse.json({ error: "Invalid ID" }, { status: 400 });
     }
 
     const product = await db
       .collection(COLLECTION)
-      .findOne({ _id: new ObjectId(params.id) });
+      .findOne({ _id: new ObjectId(id) });
 
     if (!product) {
       return NextResponse.json({ error: "Product not found" }, { status: 404 });
@@ -46,7 +47,7 @@ export async function PUT(
       delete body._id; // ✅ prevent immutable _id update
   
       const client = await clientPromise;
-      const db = client.db(DB_NAME);
+      const db = client.db("test");
   
       const result = await db
         .collection(COLLECTION)
@@ -62,19 +63,20 @@ export async function PUT(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params; // ✅ must await params
     const client = await clientPromise;
-    const db = client.db(DB_NAME);
+      const db = client.db("test");
 
-    if (!ObjectId.isValid(params.id)) {
+    if (!ObjectId.isValid(id)) {
       return NextResponse.json({ error: "Invalid ID" }, { status: 400 });
     }
 
     const result = await db
       .collection(COLLECTION)
-      .deleteOne({ _id: new ObjectId(params.id) });
+      .deleteOne({ _id: new ObjectId(id) });
 
     if (result.deletedCount === 0) {
       return NextResponse.json({ error: "Product not found" }, { status: 404 });

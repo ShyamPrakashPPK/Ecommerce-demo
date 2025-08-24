@@ -6,7 +6,7 @@ export default function StoreLayout({ children }: { children: React.ReactNode })
     <div className="flex min-h-screen flex-col">
       <Header />
       <main className="flex-1">
-        <div className="container mx-auto px-3 md:px-4 py-4 md:py-6">
+        <div className="">
           {children}
         </div>
       </main>

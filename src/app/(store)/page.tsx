@@ -43,7 +43,7 @@ export default function HomePage() {
   ];
 
   return (
-    <main className="">
+    <main className="container mx-auto">
       {/* Banner Slider */}
 <FullBanner/>
 
