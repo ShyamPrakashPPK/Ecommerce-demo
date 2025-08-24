@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import ProductsGrid from "@/components/store/ProductGrid";
+
 import FullBanner from "@/components/store/FullBanner";
 import CategoriumMosaic from "@/components/store/CategoriumMosaic";
 import FeaturedProducts from "@/components/store/FeaturedProducts";
@@ -43,7 +42,7 @@ export default function HomePage() {
   ];
 
   return (
-    <main className="container mx-auto">
+    <main className="container mx-auto px-[10%] ">
       {/* Banner Slider */}
 <FullBanner/>
 

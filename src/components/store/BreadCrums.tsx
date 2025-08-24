@@ -11,7 +11,7 @@ type Crumb = {
 export default function Breadcrumb({ items }: { items: Crumb[] }) {
   return (
     <nav className="bg-gray-200 p-4 text-sm text-gray-700">
-      <div className="container mx-auto flex items-center">
+      <div className="container mx-auto flex items-center px-[10%]">
         <Link href="/" className="flex items-center hover:text-gray-800">
           <Home className="w-4 h-4" />
           <span className="ml-1">Home</span>

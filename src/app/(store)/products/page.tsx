@@ -185,7 +185,7 @@ function ProductsPageContent() {
             { name: "Products", link: "/products" },
           ]} />
       </div>
-      <div className="pb-10 container mx-auto">
+      <div className="pb-10 container mx-auto px-[10%]">
       <Image src="/banners/full.png" alt="Banner" width={1600} height={323} />
       <div className="mx-auto   py-6 mt-5 flex gap-6">
         {/* Sidebar */}

@@ -99,7 +99,7 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
             { name: product.name },
           ]} />
       </div>
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-[10%] py-8">
         {/* Breadcrumbs */}
         
 

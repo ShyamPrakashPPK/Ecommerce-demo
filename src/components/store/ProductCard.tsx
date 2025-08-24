@@ -25,6 +25,8 @@ const VENDOR_LOGOS: Record<string, string> = {
   caterpillar: "caterpillar",
   uvex: "uvex",
   dewalt: "dewalt",
+  "3m": "3M",
+  "3M": "3M",
 };
 
 function normalizeVendor(v?: string) {
@@ -58,7 +60,7 @@ export default function ProductCard(props: ProductCardProps) {
   const vendorLogo = getVendorLogoPath(vendor);
 
   return (
-    <div className="border border-gray-200 rounded-xl overflow-hidden bg-white shadow-sm hover:shadow transition-shadow">
+    <div className="border border-gray-200 rounded-xl overflow-hidden bg-white shadow-sm hover:shadow transition-shadow flex flex-col h-full">
       {/* Clickable image area */}
       <Link href={productHref} className="relative block w-full aspect-[4/3] bg-white">
         {/* Vendor tag */}
@@ -92,24 +94,27 @@ export default function ProductCard(props: ProductCardProps) {
         />
       </Link>
 
-      <div className="px-3 pb-3">
-        <h3 className="font-medium line-clamp-2 mt-2">{name}</h3>
-        <div className="text-xs text-gray-500 mt-1">Category: {category || "—"}</div>
-        <div className="flex items-center justify-between mt-2">
-          <div className="font-semibold">${Number(price).toFixed(2)}</div>
-          <div
-            className={`text-xs px-2 py-0.5 rounded ${
-              inStock ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
-            }`}
-          >
-            {inStock ? "In Stock" : "Out of Stock"}
+      {/* Content area with flex-grow to push button to bottom */}
+      <div className="px-3 pb-3 flex flex-col flex-grow">
+        <div className="flex-grow">
+          <h3 className="font-medium line-clamp-2 mt-2">{name}</h3>
+          <div className="text-xs text-gray-500 mt-1">Category: {category || "—"}</div>
+          <div className="flex items-center justify-between mt-2">
+            <div className="font-semibold">${Number(price).toFixed(2)}</div>
+            <div
+              className={`text-xs px-2 py-0.5 rounded ${
+                inStock ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
+              }`}
+            >
+              {inStock ? "In Stock" : "Out of Stock"}
+            </div>
           </div>
         </div>
 
-        {/* Clickable button */}
+        {/* Clickable button - always at bottom */}
         <Link
           href={productHref}
-          className="block w-full mt-3 bg-cyan-600 text-white rounded-md py-2 text-center font-medium hover:bg-cyan-700"
+          className="block w-full mt-3 bg-cyan-600 text-white rounded-md py-2 text-center font-medium hover:bg-cyan-700 transition-colors"
         >
           Send Enquiry
         </Link>
