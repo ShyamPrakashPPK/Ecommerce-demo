@@ -308,11 +308,14 @@ export default function ProductsPage() {
         {/* Main */}
         <main className="flex-1">
           <Tabs defaultValue="products" className="w-full">
+            <div className="border-b border-gray-200 pb-2">
+
             <TabsList>
               <TabsTrigger value="products">Products</TabsTrigger>
               <TabsTrigger value="suppliers">Suppliers</TabsTrigger>
             </TabsList>
 
+            </div>
             {/* Products Tab */}
             <TabsContent value="products">
               <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4 gap-3">
