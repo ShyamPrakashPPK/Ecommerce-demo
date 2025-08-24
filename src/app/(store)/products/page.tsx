@@ -142,54 +142,9 @@ export default function ProductsPage() {
   const vendorsAllCount = vendorsFacet.find((x) => x.label === "All")?.count ?? total;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen ">
       {/* Top bar with tabs, search, sort */}
-      <div className="border-b border-gray-200 bg-white">
-        <div className="mx-auto max-w-7xl px-4 py-3">
-          <div className="flex items-center justify-between">
-            {/* Tabs + context */}
-            <div className="flex items-center gap-3">
-              <div className="flex bg-gray-100 rounded-md overflow-hidden">
-                <button className="px-4 py-2 bg-white text-sm font-medium border border-gray-200 rounded-md">
-                  Products
-                </button>
-                <button className="px-4 py-2 text-sm text-gray-600">
-                  Suppliers
-                </button>
-              </div>
-              <span className="hidden md:inline text-sm text-gray-600">
-                Showing result for: <span className="text-blue-600">Road alignment planning and design</span>
-              </span>
-            </div>
-
-            {/* Search + Sort aligned to right */}
-            <div className="flex items-center gap-3">
-              <div className="relative">
-                <input
-                  value={searchDraft}
-                  onChange={(e) => setSearchDraft(e.target.value)}
-                  placeholder="Search"
-                  className="w-56 md:w-72 border border-gray-200 rounded px-3 py-2"
-                />
-                <span className="absolute right-3 top-2.5 text-gray-400">⌕</span>
-              </div>
-              <select
-                value={filters.sort}
-                onChange={(e) => setSort(e.target.value)}
-                className="border border-gray-200 rounded px-2 py-2"
-              >
-                <option value="latestUpdated">Latest</option>
-                <option value="latestCreated">Newest</option>
-                <option value="priceAsc">Price ↑</option>
-                <option value="priceDesc">Price ↓</option>
-                <option value="nameAsc">Name A–Z</option>
-                <option value="nameDesc">Name Z–A</option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </div>
-
+  
       {/* Body */}
       <div className="mx-auto max-w-7xl px-4 py-6 flex gap-6">
         {/* Sidebar */}
@@ -204,7 +159,7 @@ export default function ProductsPage() {
             </button>
           </div>
 
-          <Accordion type="multiple" className="w-full">
+          <Accordion type="multiple" className="w-full px-[5%] py-[3%]  bg-white rounded-lg border border-gray-200">
             {/* Vendors */}
             <AccordionItem value="vendors">
               <AccordionTrigger>Business Type</AccordionTrigger>
@@ -342,11 +297,61 @@ export default function ProductsPage() {
           ) : products.length === 0 ? (
             <div className="text-gray-600">No products match the selected filters.</div>
           ) : (
+            <div>
+    <div className="border-b border-gray-200 bg-white">
+        <div className="mx-auto max-w-7xl px-4 py-3">
+        <div className="flex bg-gray-100 rounded-md overflow-hidden">
+                <button className="px-4 py-2 bg-white text-sm font-medium border border-gray-200 rounded-md">
+                  Products
+                </button>
+                <button className="px-4 py-2 text-sm text-gray-600">
+                  Suppliers
+                </button>
+              </div>
+          <div className="flex items-center justify-between">
+            {/* Tabs + context */}
+            <div className="flex items-center gap-3">
+             
+              <span className="hidden md:inline text-sm text-gray-600">
+                Showing result for: <span className="text-blue-600">Road alignment planning and design</span>
+              </span>
+            </div>
+
+            {/* Search + Sort aligned to right */}
+            <div className="flex items-center gap-3">
+              <div className="relative">
+                <input
+                  value={searchDraft}
+                  onChange={(e) => setSearchDraft(e.target.value)}
+                  placeholder="Search"
+                  className="w-56 md:w-72 border border-gray-200 rounded px-3 py-2"
+                />
+                <span className="absolute right-3 top-2.5 text-gray-400">⌕</span>
+              </div>
+              <select
+                value={filters.sort}
+                onChange={(e) => setSort(e.target.value)}
+                className="border border-gray-200 rounded px-2 py-2"
+              >
+                <option value="latestUpdated">Latest</option>
+                <option value="latestCreated">Newest</option>
+                <option value="priceAsc">Price ↑</option>
+                <option value="priceDesc">Price ↓</option>
+                <option value="nameAsc">Name A–Z</option>
+                <option value="nameDesc">Name Z–A</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
               {products.map((p) => (
                 <ProductCard key={p._id} {...p} imageUrl={p.imageUrl || "/placeholder.svg"} />
               ))}
             </div>
+              </div>
           )}
 
           <div className="flex items-center justify-center gap-3 mt-6">
